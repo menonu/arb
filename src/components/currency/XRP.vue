@@ -16,7 +16,7 @@
 import Vue from "vue";
 import PriceCard from "./PriceCard.vue";
 import PriceHeader from "./PriceHeader.vue";
-import { GetBtcPrices, Price } from "./logic/currency";
+import { GetXrpPrices, Price } from "./logic/currency";
 
 type Data = {
   prices: Array<Price>;
@@ -24,7 +24,7 @@ type Data = {
 };
 
 export default Vue.extend({
-  name: "BTC",
+  name: "XRP",
 
   components: {
     PriceCard,
@@ -40,8 +40,8 @@ export default Vue.extend({
 
   methods: {
     async updatePrice() {
-      console.log(name + ": price update");
-      const prices = await GetBtcPrices();
+      console.log("price update");
+      const prices = await GetXrpPrices();
       this.prices = prices;
     },
     async updateExchangeRate() {

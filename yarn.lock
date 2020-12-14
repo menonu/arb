@@ -172,6 +172,11 @@
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.6.tgz#f4c7ec43e81b319a9815115031709f26987891f0"
   integrity sha512-3c+yGKvVP5Y9TYBEibGNR+kLtijnj7mYrXRg+WpFb2X9xm04g/DXYkfg4hmzJQosc9snFNUPkbYIhu+KAm6jJw==
 
+"@types/lodash@^4.14.165":
+  version "4.14.165"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.165.tgz#74d55d947452e2de0742bad65270433b63a8c30f"
+  integrity sha512-tjSSOTHhI5mCHTy/OOXYIhi2Wt1qcbHmuXD1Ha7q70CgI/I71afO4XtLb/cVexki1oVYchpul/TOuu3Arcdxrg==
+
 "@types/mime@*":
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/@types/mime/-/mime-2.0.3.tgz#c893b73721db73699943bfc3653b1deb7faa4a3a"
@@ -7345,6 +7350,11 @@ vm-browserify@^1.0.1:
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
 
+vue-class-component@^7.2.6:
+  version "7.2.6"
+  resolved "https://registry.yarnpkg.com/vue-class-component/-/vue-class-component-7.2.6.tgz#8471e037b8e4762f5a464686e19e5afc708502e4"
+  integrity sha512-+eaQXVrAm/LldalI272PpDe3+i4mPis0ORiMYxF6Ae4hyuCh15W8Idet7wPUEs4N4YptgFHGys4UrgNQOMyO6w==
+
 vue-cli-plugin-vuetify@~2.0.7:
   version "2.0.7"
   resolved "https://registry.yarnpkg.com/vue-cli-plugin-vuetify/-/vue-cli-plugin-vuetify-2.0.7.tgz#fcb4f1655e7c9199ee40dcbf6465e2355fd074d5"
@@ -7390,6 +7400,11 @@ vue-loader@^15.9.2:
     loader-utils "^1.1.0"
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
+
+vue-plugin-timers@^0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/vue-plugin-timers/-/vue-plugin-timers-0.1.6.tgz#e883537733b1cd49a0b1a757a0b257b4cd87e75b"
+  integrity sha512-RuWFHgyiY4Cc5rFIdEqLQ/dFkcYF+a0iurbC6Kv2w+hQC+mmi8ElU4Aw/2KJgxZhYd2CHQ3WpNnbXWRAhVx76g==
 
 vue-style-loader@^4.1.0, vue-style-loader@^4.1.2:
   version "4.1.2"

@@ -6,10 +6,10 @@
           Exchange
         </v-col>
         <v-col>
-          Low
+          Bid
         </v-col>
         <v-col>
-          High
+          Ask
         </v-col>
         <v-col>
           Vo

@@ -6,8 +6,9 @@
       :key="price.exchange"
       :prices="price"
     ></price-card>
-    <v-btn @click="updatePrice()">Fire</v-btn>
-    <v-btn @click="updateExchangeRate()">Fire2</v-btn>
+
+    DiffBidBid: {{ Diffbidbid }} <br />
+    DiffBidAsk: {{ Diffbidask }} <br />
     JPYUSD is {{ jpyusd }}
   </div>
 </template>
@@ -16,7 +17,7 @@
 import Vue from "vue";
 import PriceCard from "./PriceCard.vue";
 import PriceHeader from "./PriceHeader.vue";
-import { GetBtcPrices, Price } from "./logic/currency";
+import { Price } from "./logic/currency";
 
 type Data = {
   prices: Array<Price>;
@@ -24,11 +25,13 @@ type Data = {
 };
 
 export default Vue.extend({
-  name: "BTC",
-
   components: {
     PriceCard,
     PriceHeader,
+  },
+
+  props: {
+    pricefeeder: Function,
   },
 
   data(): Data {
@@ -41,7 +44,7 @@ export default Vue.extend({
   methods: {
     async updatePrice() {
       console.log(name + ": price update");
-      const prices = await GetBtcPrices();
+      const prices = await this.pricefeeder();
       this.prices = prices;
     },
     async updateExchangeRate() {
@@ -74,6 +77,25 @@ export default Vue.extend({
         }
         return item;
       });
+    },
+
+    Diffbidbid() {
+      const bidHigh: number = Math.max(...this.usdprices.map(d => d.bid));
+      const bidLow: number = Math.min(...this.usdprices.map(d => d.bid));
+      return {
+        value: bidHigh - bidLow,
+        ratio: bidHigh / bidLow,
+      };
+    },
+
+    Diffbidask() {
+      const bidHigh: number = Math.max(...this.usdprices.map(d => d.bid));
+      const askLow: number = Math.min(...this.usdprices.map(d => d.ask));
+      console.log("askLow", askLow);
+      return {
+        value: bidHigh - askLow,
+        ratio: bidHigh / askLow,
+      };
     },
   },
 });
