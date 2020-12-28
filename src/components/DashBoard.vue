@@ -1,13 +1,19 @@
 <template>
   <v-container>
-    <v-row class="text-center">
+    <!-- <v-row class="text-center">
       <v-col cols="12">
         Flash
       </v-col>
-    </v-row>
+    </v-row> -->
     <v-row class="text-center">
       <v-col cols="12">
-        <v-tabs v-model="activetab" background-color="primary" dark centered>
+        <v-tabs
+          v-model="activetab"
+          background-color="deep-purple accent-4"
+          center-active
+          dark
+          centered
+        >
           <v-tab v-for="item in tabitems" :key="item.tab">
             {{ item.tab }}
           </v-tab>
@@ -21,47 +27,60 @@
           <component
             v-bind:is="item.content"
             :pricefeeder="item.pricefeeder"
+            :digits="item.digits"
           ></component>
         </div>
       </v-tab-item>
     </v-tabs-items>
-
-    <!-- <BTC /> -->
-    <!-- <ETH /> -->
+    <v-btn @click="getMultiple()">Fire</v-btn>
   </v-container>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import BTC from "./currency/BTC.vue";
-import ETH from "./currency/ETH.vue";
-import XRP from "./currency/XRP.vue";
-import COMMON from "./currency/PriceBoardCommon.vue";
+import USDBOARD from "./currency/PriceBoardUSD.vue";
+import BTCBOARD from "./currency/PriceBoardBTC.vue";
+import ETHBOARD from "./currency/PriceBoardETH.vue";
 import {
   GetBtcPrices,
   GetXemPrices,
   GetBchPrices,
+  GetEthPrices,
+  GetXrpPrices,
+  GetXlmPrices,
+  GetLtcPrices,
 } from "./currency/logic/currency";
 
 export default Vue.extend({
   name: "DashBoard",
 
   components: {
-    BTC,
-    ETH,
-    XRP,
-    COMMON,
+    USDBOARD,
+    BTCBOARD,
+    ETHBOARD,
   },
 
   data() {
     return {
       activetab: 0,
       tabitems: [
-        { tab: "BTC", content: "COMMON", pricefeeder: GetBtcPrices },
-        { tab: "ETH", content: "ETH" },
-        { tab: "XRP", content: "XRP" },
-        { tab: "XEM", content: "COMMON", pricefeeder: GetXemPrices },
-        { tab: "BCH", content: "COMMON", pricefeeder: GetBchPrices },
+        {
+          tab: "BTC",
+          content: "USDBOARD",
+          pricefeeder: GetBtcPrices,
+          digits: 2,
+        },
+        {
+          tab: "ETH",
+          content: "USDBOARD",
+          pricefeeder: GetEthPrices,
+          digits: 2,
+        },
+        { tab: "XRP", content: "BTCBOARD", pricefeeder: GetXrpPrices },
+        { tab: "XEM", content: "BTCBOARD", pricefeeder: GetXemPrices },
+        { tab: "BCH", content: "BTCBOARD", pricefeeder: GetBchPrices },
+        { tab: "XLM", content: "BTCBOARD", pricefeeder: GetXlmPrices },
+        { tab: "Ltc", content: "BTCBOARD", pricefeeder: GetLtcPrices },
       ],
     };
   },

@@ -1,18 +1,25 @@
 <template>
   <v-row justify="center" align-content="center">
-    <v-card outlined tile width="900" class="mx-6">
-      <v-row>
-        <v-col class="text-body-1">
+    <v-card outlined tile width="900" class="px-3 mx-3">
+      <v-row dense>
+        <v-col class="text-body-1" cols="12" md="3">
           {{ prices.exchange }}
         </v-col>
         <v-col>
-          {{ prices.bid.toFixed(digits) }}
+          <div class="text-caption font-weight-thin">
+            {{ prices.bid.toFixed(digits) }}
+          </div>
+          <div class="text-h6">
+            {{ prices.refinedbid.toFixed(digits) }}
+          </div>
         </v-col>
         <v-col>
-          {{ prices.ask.toFixed(digits) }}
-        </v-col>
-        <v-col>
-          {{ prices.vol }}
+          <div class="text-caption font-weight-thin">
+            {{ prices.ask.toFixed(digits) }}
+          </div>
+          <div class="text-h6">
+            {{ prices.refinedask.toFixed(digits) }}
+          </div>
         </v-col>
       </v-row>
     </v-card>
@@ -23,13 +30,18 @@
 import Vue, { PropType } from "vue";
 import { Price } from "./logic/currency";
 
+export interface RefinedPrice extends Price {
+  refinedask: number;
+  refinedbid: number;
+}
+
 export default Vue.extend({
   name: "PriceCard",
   props: {
     prices: Object as PropType<Price>,
     digits: {
       type: Number,
-      default: 9,
+      default: 8,
     },
   },
 

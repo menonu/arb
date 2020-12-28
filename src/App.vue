@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <v-app-bar app color="primary" dark dense>
-      <div class="d-flex align-center">
+    <v-app-bar app dense>
+      <div class="text-h6 d-flex align-center ">
         Arb
       </div>
 

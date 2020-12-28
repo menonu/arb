@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "serve": "node index.js"
+  },
   "dependencies": {
     "cors-anywhere": "^0.4.3"
   }

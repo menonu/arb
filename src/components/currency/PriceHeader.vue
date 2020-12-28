@@ -1,18 +1,15 @@
 <template>
   <v-row justify="center" align-content="center">
-    <v-card outlined tile width="900" class="mx-6" color="indigo lighten-4">
-      <v-row>
-        <v-col class="text-body-1">
+    <v-card outlined tile width="900" class="mx-3" color="secondary" dark>
+      <v-row dense>
+        <!-- <v-col>
           Exchange
-        </v-col>
-        <v-col>
+        </v-col> -->
+        <v-col align-self="center">
           Bid
         </v-col>
-        <v-col>
+        <v-col align-self="center">
           Ask
-        </v-col>
-        <v-col>
-          Vo
         </v-col>
       </v-row>
     </v-card>
