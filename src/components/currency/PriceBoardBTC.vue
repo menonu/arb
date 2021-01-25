@@ -20,7 +20,7 @@
 import Vue from "vue";
 import PriceCard, { RefinedPrice } from "./PriceCard.vue";
 import PriceHeader from "./PriceHeader.vue";
-import { Price, GetBTCJPYPrice, GetBTCUSDPrice } from "./logic/currency";
+import { Price, GetBTCJPYPrice, GetBTCUSDPrice, GetUSDJPYRate } from "./logic/currency";
 
 type Data = {
   prices: Array<Price>;
@@ -59,14 +59,17 @@ export default Vue.extend({
       const prices = await this.pricefeeder();
       this.prices = prices;
     },
-    async updateBTC() {
+    async updateExchangeRate() {
       const ret = await Promise.all([
         GetBTCJPYPrice(this.jpyfeeder),
         GetBTCUSDPrice(),
       ]);
       this.btcjpy = ret[0];
       this.btcusd = ret[1];
+
+      this.jpyusd = await GetUSDJPYRate();
     },
+
   },
 
   timers: {
@@ -75,7 +78,7 @@ export default Vue.extend({
       interval: 1000,
       repeat: true,
     },
-    updateBTC: {
+    updateExchangeRate: {
       interval: 1000,
       repeat: true,
     },
@@ -87,15 +90,23 @@ export default Vue.extend({
         const refine: RefinedPrice = {
           refinedbid: item.bid,
           refinedask: item.ask,
+          usdbid: item.bid,
+          usdask: item.ask,
           ...item,
         };
         if (item.symbol.includes("JPY")) {
           refine.refinedbid = item.bid / this.btcjpy;
           refine.refinedask = item.ask / this.btcjpy;
+          refine.usdbid = item.bid / this.jpyusd;
+          refine.usdask = item.ask / this.jpyusd;
         }
         if (item.symbol.includes("USD")) {
           refine.refinedbid = item.bid / this.btcusd;
           refine.refinedask = item.ask / this.btcusd;
+        }
+        if (item.symbol.includes("BTC")) {
+          refine.usdbid = item.bid * this.btcusd;
+          refine.usdask = item.ask * this.btcusd;
         }
         return refine;
       });

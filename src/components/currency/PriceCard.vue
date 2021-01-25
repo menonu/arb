@@ -9,6 +9,9 @@
           <div class="text-caption font-weight-thin">
             {{ prices.bid.toFixed(digits) }}
           </div>
+          <div v-if="prices.usdbid" class="text-caption font-weight-thin">
+            {{ prices.usdbid.toFixed(4) }}
+          </div>
           <div class="text-h6">
             {{ prices.refinedbid.toFixed(digits) }}
           </div>
@@ -16,6 +19,9 @@
         <v-col>
           <div class="text-caption font-weight-thin">
             {{ prices.ask.toFixed(digits) }}
+          </div>
+          <div v-if="prices.usdask" class="text-caption font-weight-thin">
+            {{ prices.usdask.toFixed(4) }}
           </div>
           <div class="text-h6">
             {{ prices.refinedask.toFixed(digits) }}
@@ -33,6 +39,8 @@ import { Price } from "./logic/currency";
 export interface RefinedPrice extends Price {
   refinedask: number;
   refinedbid: number;
+  usdask?: number;
+  usdbid?: number;
 }
 
 export default Vue.extend({
