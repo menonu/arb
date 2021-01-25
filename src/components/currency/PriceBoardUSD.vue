@@ -20,7 +20,7 @@
 import Vue from "vue";
 import PriceCard, { RefinedPrice } from "./PriceCard.vue";
 import PriceHeader from "./PriceHeader.vue";
-import { Price, GetBTCJPYPrice, GetBTCUSDPrice } from "./logic/currency";
+import { Price, GetBTCJPYPrice, GetBTCUSDPrice, GetUSDJPYRate } from "./logic/currency";
 
 type Data = {
   prices: Array<Price>;
@@ -38,6 +38,10 @@ export default Vue.extend({
   props: {
     pricefeeder: Function,
     digits: Number,
+    jpyfeeder: {
+      type: String,
+      default: "bitbank",
+    },
   },
 
   data(): Data {
@@ -56,28 +60,32 @@ export default Vue.extend({
       this.prices = prices;
     },
     async updateExchangeRate() {
+      this.jpyusd = await GetUSDJPYRate();
       // await fetch("https://api.exchangeratesapi.io/latest?base=USD", {
       //   mode: "cors",
       // })
       //   .then(response => response.json())
       //   .then(data => (this.jpyusd = data.rates.JPY));
 
-      const CorsProxy = process.env.VUE_APP_CORSPROXY || "";
-      const df = await fetch(
-        CorsProxy + "https://www.gaitameonline.com/rateaj/getrate",
-        {
-          mode: "cors",
-        }
-      )
-        .then(response => response.json())
-        .then(
-          data =>
-            (this.jpyusd = data.quotes.find(
-              (el: any) => el.currencyPairCode === "USDJPY"
-            ).open)
-        );
+      // const CorsProxy = process.env.VUE_APP_CORSPROXY || "";
+      // const df = await fetch(
+      //   CorsProxy + "https://www.gaitameonline.com/rateaj/getrate",
+      //   {
+      //     mode: "cors",
+      //   }
+      // )
+      //   .then(response => response.json())
+      //   .then(
+      //     data =>
+      //       (this.jpyusd = data.quotes.find(
+      //         (el: any) => el.currencyPairCode === "USDJPY"
+      //       ).open)
+      //   );
 
-      const ret = await Promise.all([GetBTCJPYPrice(), GetBTCUSDPrice()]);
+      const ret = await Promise.all([
+        GetBTCJPYPrice(this.jpyfeeder),
+        GetBTCUSDPrice(),
+      ]);
       // const btcjpy = GetBTCJPYPrice();
       // const btcusd = GetBTCUSDPrice()
       this.btcjpy = ret[0];

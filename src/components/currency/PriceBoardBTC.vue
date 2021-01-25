@@ -38,6 +38,10 @@ export default Vue.extend({
   props: {
     pricefeeder: Function,
     digits: Number,
+    jpyfeeder: {
+      type: String,
+      default: "bitbank",
+    },
   },
 
   data(): Data {
@@ -56,7 +60,10 @@ export default Vue.extend({
       this.prices = prices;
     },
     async updateBTC() {
-      const ret = await Promise.all([GetBTCJPYPrice(), GetBTCUSDPrice()]);
+      const ret = await Promise.all([
+        GetBTCJPYPrice(this.jpyfeeder),
+        GetBTCUSDPrice(),
+      ]);
       this.btcjpy = ret[0];
       this.btcusd = ret[1];
     },

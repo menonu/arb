@@ -28,6 +28,7 @@
             v-bind:is="item.content"
             :pricefeeder="item.pricefeeder"
             :digits="item.digits"
+            :jpyfeeder="item.jpyfeeder"
           ></component>
         </div>
       </v-tab-item>
@@ -72,15 +73,20 @@ export default Vue.extend({
         },
         {
           tab: "ETH",
-          content: "USDBOARD",
+          content: "BTCBOARD",
           pricefeeder: GetEthPrices,
-          digits: 2,
+          digits: 6,
         },
         { tab: "XRP", content: "BTCBOARD", pricefeeder: GetXrpPrices },
-        { tab: "XEM", content: "BTCBOARD", pricefeeder: GetXemPrices },
+        {
+          tab: "XEM",
+          content: "BTCBOARD",
+          pricefeeder: GetXemPrices,
+          jpyfeeder: "zaif",
+        },
         { tab: "BCH", content: "BTCBOARD", pricefeeder: GetBchPrices },
         { tab: "XLM", content: "BTCBOARD", pricefeeder: GetXlmPrices },
-        { tab: "Ltc", content: "BTCBOARD", pricefeeder: GetLtcPrices },
+        { tab: "LTC", content: "BTCBOARD", pricefeeder: GetLtcPrices },
       ],
     };
   },

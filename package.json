@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@narative/oanda-v20": "^3.0.53",
     "ccxt": "^1.38.19",
     "lodash": "^4.17.20",
     "vue": "^2.6.11",

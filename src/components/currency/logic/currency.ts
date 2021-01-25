@@ -1,5 +1,6 @@
 import ccxt, { Exchange, Ticker } from "ccxt";
 import _ from "lodash";
+import * as oandaAPI from "@narative/oanda-v20";
 
 const InitCCXT = () => {
   const proxyurl = process.env.VUE_APP_CORSPROXY || "";
@@ -20,6 +21,12 @@ const InitCCXT = () => {
   const kucoin = new ccxt.kucoin({
     proxy: proxyurl,
   });
+  const coincheck = new ccxt.coincheck({
+    proxy: proxyurl,
+  });
+  const bitflyer = new ccxt.bitflyer({
+    proxy: proxyurl,
+  });
   const exchanges: { [s: string]: Exchange } = {
     binance,
     bitbank,
@@ -28,11 +35,21 @@ const InitCCXT = () => {
     huobijp,
     okex,
     kucoin,
+    coincheck,
+    bitflyer,
   };
   return exchanges;
 };
 
 const ex = InitCCXT();
+
+console.log(process.env.VUE_APP_OANDA_KEY)
+
+const fx = new oandaAPI.Rest(
+  "my-app-name",
+  process.env.VUE_APP_OANDA_KEY as string,
+  true
+); // user token on OANDA practice server
 
 export interface Price {
   exchange: string;
@@ -57,6 +74,7 @@ const GetBtcPrices = async (): Promise<Array<Price>> => {
     Bitbank: ex.bitbank.fetch_ticker("BTC/JPY"),
     FTX: ex.ftx.fetch_ticker("BTC/USD"),
     ZAIF: ex.zaif.fetch_ticker("BTC/JPY"),
+    bitflyer: ex.bitflyer.fetch_ticker("BTC/JPY"),
   };
 
   const results = _.zip(_.keys(prices), await Promise.all(_.values(prices)));
@@ -129,8 +147,9 @@ const GetBchPrices = async (): Promise<Array<Price>> => {
   return xav;
 };
 
-const GetBTCJPYPrice = async (): Promise<number> => {
-  const btcjpy = await ex.bitbank.fetch_ticker("BTC/JPY");
+const GetBTCJPYPrice = async (feeder: string): Promise<number> => {
+  // const btcjpy = await ex.bitbank.fetch_ticker("BTC/JPY");
+  const btcjpy = await ex[feeder].fetch_ticker("BTC/JPY");
   return btcjpy.bid;
 };
 
@@ -166,6 +185,7 @@ const GetXlmPrices = async (): Promise<Array<Price>> => {
 const GetLtcPrices = async (): Promise<Array<Price>> => {
   const prices = {
     Binance: ex.binance.fetch_ticker("LTC/BTC"),
+    FTX: ex.ftx.fetch_ticker("LTC/USD"),
     huobijp: ex.huobijp.fetch_ticker("LTC/BTC"),
     Bitbank: ex.bitbank.fetch_ticker("LTC/BTC"),
     Bitbankj: ex.bitbank.fetch_ticker("LTC/JPY"),
@@ -178,6 +198,18 @@ const GetLtcPrices = async (): Promise<Array<Price>> => {
   return xav;
 };
 
+const GetUSDJPYRate = async () => {
+  const result = await fx.pricing.get({
+    accountID: process.env.VUE_APP_OANDA_ID as string,
+    query: {
+      instruments: ["USD_JPY"],
+    },
+  });
+
+  return Number(result.prices[0].asks[0].price);
+  // console.log(result);
+};
+
 export {
   GetBtcPrices,
   GetEthPrices,
@@ -188,4 +220,5 @@ export {
   GetBTCUSDPrice,
   GetXlmPrices,
   GetLtcPrices,
+  GetUSDJPYRate,
 };
