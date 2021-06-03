@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@narative/oanda-v20": "^3.0.53",
-    "ccxt": "^1.38.19",
+    "ccxt": "^1.50.78",
     "cheerio": "^1.0.0-rc.5",
     "lodash": "^4.17.20",
     "vue": "^2.6.11",

@@ -245,6 +245,19 @@ const GetDogePrices = async (): Promise<Array<Price>> => {
   return xav;
 };
 
+const GetXymPrices = async (): Promise<Array<Price>> => {
+  const prices = {
+    poloniex: ex.poloniex.fetch_ticker("XYM/USDT"),
+    Zaif: ex.zaif.fetch_ticker("XYM/JPY"),
+  };
+
+  const results = _.zip(_.keys(prices), await Promise.all(_.values(prices)));
+  const xav = results.map(
+    (v): Price => ({ exchange: v[0] ? v[0] : "None", ...ExtractTicker(v[1]) })
+  );
+  return xav;
+};
+
 export {
   GetBtcPrices,
   GetEthPrices,
@@ -257,4 +270,5 @@ export {
   GetLtcPrices,
   GetUSDJPYRate,
   GetDogePrices,
+  GetXymPrices,
 };

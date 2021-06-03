@@ -51,6 +51,7 @@ import {
   GetXlmPrices,
   GetLtcPrices,
   GetDogePrices,
+  GetXymPrices,
 } from "./currency/logic/currency";
 
 export default Vue.extend({
@@ -73,19 +74,20 @@ export default Vue.extend({
           digits: 2,
         },
         {
+          tab: "XEM",
+          content: "BTCBOARD",
+          pricefeeder: GetXemPrices,
+          jpyfeeder: "zaif",
+        },
+        { tab: "XYM", content: "BTCBOARD", pricefeeder: GetXymPrices },
+        { tab: "BCH", content: "BTCBOARD", pricefeeder: GetBchPrices },
+        {
           tab: "ETH",
           content: "BTCBOARD",
           pricefeeder: GetEthPrices,
           digits: 6,
         },
         { tab: "XRP", content: "BTCBOARD", pricefeeder: GetXrpPrices },
-        {
-          tab: "XEM",
-          content: "BTCBOARD",
-          pricefeeder: GetXemPrices,
-          jpyfeeder: "zaif",
-        },
-        { tab: "BCH", content: "BTCBOARD", pricefeeder: GetBchPrices },
         { tab: "XLM", content: "BTCBOARD", pricefeeder: GetXlmPrices },
         { tab: "LTC", content: "BTCBOARD", pricefeeder: GetLtcPrices },
         { tab: "DOGE", content: "BTCBOARD", pricefeeder: GetDogePrices },
