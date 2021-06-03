@@ -50,6 +50,7 @@ import {
   GetXrpPrices,
   GetXlmPrices,
   GetLtcPrices,
+  GetDogePrices,
 } from "./currency/logic/currency";
 
 export default Vue.extend({
@@ -87,6 +88,7 @@ export default Vue.extend({
         { tab: "BCH", content: "BTCBOARD", pricefeeder: GetBchPrices },
         { tab: "XLM", content: "BTCBOARD", pricefeeder: GetXlmPrices },
         { tab: "LTC", content: "BTCBOARD", pricefeeder: GetLtcPrices },
+        { tab: "DOGE", content: "BTCBOARD", pricefeeder: GetDogePrices },
       ],
     };
   },

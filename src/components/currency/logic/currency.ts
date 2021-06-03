@@ -27,6 +27,10 @@ const InitCCXT = () => {
   const bitflyer = new ccxt.bitflyer({
     proxy: proxyurl,
   });
+  const poloniex = new ccxt.poloniex({
+    proxy: proxyurl,
+  });
+
   const exchanges: { [s: string]: Exchange } = {
     binance,
     bitbank,
@@ -37,19 +41,20 @@ const InitCCXT = () => {
     kucoin,
     coincheck,
     bitflyer,
+    poloniex,
   };
   return exchanges;
 };
 
 const ex = InitCCXT();
 
-console.log(process.env.VUE_APP_OANDA_KEY)
+console.log(process.env.VUE_APP_OANDA_KEY);
 
-const fx = new oandaAPI.Rest(
-  "my-app-name",
-  process.env.VUE_APP_OANDA_KEY as string,
-  true
-); // user token on OANDA practice server
+// const fx = new oandaAPI.Rest(
+//   "my-app-name",
+//   process.env.VUE_APP_OANDA_KEY as string,
+//   true
+// ); // user token on OANDA practice server
 
 export interface Price {
   exchange: string;
@@ -74,7 +79,6 @@ const GetBtcPrices = async (): Promise<Array<Price>> => {
     Bitbank: ex.bitbank.fetch_ticker("BTC/JPY"),
     FTX: ex.ftx.fetch_ticker("BTC/USD"),
     ZAIF: ex.zaif.fetch_ticker("BTC/JPY"),
-    bitflyer: ex.bitflyer.fetch_ticker("BTC/JPY"),
   };
 
   const results = _.zip(_.keys(prices), await Promise.all(_.values(prices)));
@@ -104,7 +108,6 @@ const GetXrpPrices = async (): Promise<Array<Price>> => {
     Binance: ex.binance.fetch_ticker("XRP/USDT"),
     BinanceBTC: ex.binance.fetch_ticker("XRP/BTC"),
     Bitbank: ex.bitbank.fetch_ticker("XRP/JPY"),
-    FTXBTC: ex.ftx.fetch_ticker("XRP/BTC"),
     FTX: ex.ftx.fetch_ticker("XRP/USD"),
     huobijp: ex.huobijp.fetch_ticker("XRP/BTC"),
   };
@@ -198,16 +201,48 @@ const GetLtcPrices = async (): Promise<Array<Price>> => {
   return xav;
 };
 
-const GetUSDJPYRate = async () => {
-  const result = await fx.pricing.get({
-    accountID: process.env.VUE_APP_OANDA_ID as string,
-    query: {
-      instruments: ["USD_JPY"],
-    },
-  });
+import cheerio from "cheerio";
 
-  return Number(result.prices[0].asks[0].price);
+const GetUSDJPYRate = async () => {
+  // const result = await fx.pricing.get({
+  //   accountID: process.env.VUE_APP_OANDA_ID as string,
+  //   query: {
+  //     instruments: ["USD_JPY"],
+  //   },
+  // });
+
+  // return Number(result.prices[0].asks[0].price);
   // console.log(result);
+
+  const res = await fetch(
+    process.env.VUE_APP_CORSPROXY +
+      "https://info.finance.yahoo.co.jp/fx/async/getRate/"
+  );
+  const fx = await res.json();
+  console.log(fx);
+  return fx.USDJPY.Bid;
+  // const d = await res.text()
+  // const $ = cheerio.load(d);
+  // // console.log($.html());
+
+  // // const price = $(escape("#quote-header-info > div.My(6px).Pos(r).smartphone_Mt(6px) > div.D(ib).Va(m).Maw(65%).Ov(h) > div > span.Trsdu(0.3s).Fw(b).Fz(36px).Mb(-4px).D(ib)")).text();
+  // console.log($.html())
+  // const price = $('#cFx');
+  // console.log("quote", price);
+  // return 1.0;
+};
+
+const GetDogePrices = async (): Promise<Array<Price>> => {
+  const prices = {
+    Binance: ex.binance.fetch_ticker("DOGE/USDT"),
+    Poloniex: ex.poloniex.fetch_ticker("DOGE/USDT"),
+  };
+
+  const results = _.zip(_.keys(prices), await Promise.all(_.values(prices)));
+  const xav = results.map(
+    (v): Price => ({ exchange: v[0] ? v[0] : "None", ...ExtractTicker(v[1]) })
+  );
+  return xav;
 };
 
 export {
@@ -221,4 +256,5 @@ export {
   GetXlmPrices,
   GetLtcPrices,
   GetUSDJPYRate,
+  GetDogePrices,
 };

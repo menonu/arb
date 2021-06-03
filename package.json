@@ -10,6 +10,7 @@
   "dependencies": {
     "@narative/oanda-v20": "^3.0.53",
     "ccxt": "^1.38.19",
+    "cheerio": "^1.0.0-rc.5",
     "lodash": "^4.17.20",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.6",

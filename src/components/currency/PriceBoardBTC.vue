@@ -79,7 +79,7 @@ export default Vue.extend({
       repeat: true,
     },
     updateExchangeRate: {
-      interval: 1000,
+      interval: 3000,
       repeat: true,
     },
   },
