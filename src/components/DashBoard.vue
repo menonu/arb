@@ -41,7 +41,7 @@
 import Vue from "vue";
 import USDBOARD from "./currency/PriceBoardUSD.vue";
 import BTCBOARD from "./currency/PriceBoardBTC.vue";
-import ETHBOARD from "./currency/PriceBoardETH.vue";
+// import ETHBOARD from "./currency/PriceBoardETH.vue";
 import {
   GetBtcPrices,
   GetXemPrices,
@@ -60,7 +60,7 @@ export default Vue.extend({
   components: {
     USDBOARD,
     BTCBOARD,
-    ETHBOARD,
+    // ETHBOARD,
   },
 
   data() {

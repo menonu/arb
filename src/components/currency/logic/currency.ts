@@ -5,7 +5,7 @@ import * as oandaAPI from "@narative/oanda-v20";
 const InitCCXT = () => {
   const proxyurl = process.env.VUE_APP_CORSPROXY || "";
   const binance = new ccxt.binance();
-  const bitbank = new ccxt.bitbank();
+  // const bitbank = new ccxt.bitbank();
   const ftx = new ccxt.ftx({
     proxy: proxyurl,
   });
@@ -33,7 +33,6 @@ const InitCCXT = () => {
 
   const exchanges: { [s: string]: Exchange } = {
     binance,
-    bitbank,
     ftx,
     zaif,
     huobijp,
@@ -76,7 +75,7 @@ const ExtractTicker = (ticker: Ticker) => {
 const GetBtcPrices = async (): Promise<Array<Price>> => {
   const prices = {
     Binance: ex.binance.fetch_ticker("BTC/USDT"),
-    Bitbank: ex.bitbank.fetch_ticker("BTC/JPY"),
+    // Bitbank: ex.bitbank.fetch_ticker("BTC/JPY"),
     FTX: ex.ftx.fetch_ticker("BTC/USD"),
     ZAIF: ex.zaif.fetch_ticker("BTC/JPY"),
   };
@@ -92,7 +91,7 @@ const GetEthPrices = async (): Promise<Array<Price>> => {
   const prices = {
     Binance: ex.binance.fetch_ticker("ETH/USDT"),
     FTX: ex.ftx.fetch_ticker("ETH/USD"),
-    Bitbank: ex.bitbank.fetch_ticker("ETH/JPY"),
+    // Bitbank: ex.bitbank.fetch_ticker("ETH/JPY"),
     zaif: ex.zaif.fetch_ticker("ETH/JPY"),
   };
 
@@ -107,7 +106,7 @@ const GetXrpPrices = async (): Promise<Array<Price>> => {
   const prices = {
     Binance: ex.binance.fetch_ticker("XRP/USDT"),
     BinanceBTC: ex.binance.fetch_ticker("XRP/BTC"),
-    Bitbank: ex.bitbank.fetch_ticker("XRP/JPY"),
+    // Bitbank: ex.bitbank.fetch_ticker("XRP/JPY"),
     FTX: ex.ftx.fetch_ticker("XRP/USD"),
     huobijp: ex.huobijp.fetch_ticker("XRP/BTC"),
   };
@@ -139,7 +138,7 @@ const GetBchPrices = async (): Promise<Array<Price>> => {
     Binance: ex.binance.fetch_ticker("BCH/USDT"),
     FTX: ex.ftx.fetch_ticker("BCH/USD"),
     zaif: ex.zaif.fetch_ticker("BCH/JPY"),
-    Bitbank: ex.bitbank.fetch_ticker("BCH/JPY"),
+    // Bitbank: ex.bitbank.fetch_ticker("BCH/JPY"),
     huobijp: ex.huobijp.fetch_ticker("BCH/BTC"),
   };
 
@@ -161,10 +160,10 @@ const GetBTCUSDPrice = async (): Promise<number> => {
   return btcusd.bid;
 };
 
-export const GetETHJPYPrice = async (): Promise<number> => {
-  const ethjpy = await ex.bitbank.fetch_ticker("ETH/JPY");
-  return ethjpy.bid;
-};
+// export const GetETHJPYPrice = async (): Promise<number> => {
+//   const ethjpy = await ex.bitbank.fetch_ticker("ETH/JPY");
+//   return ethjpy.bid;
+// };
 
 export const GetETHUSDPrice = async (): Promise<number> => {
   const ethusd = await ex.binance.fetch_ticker("ETH/USDT");
@@ -175,7 +174,7 @@ const GetXlmPrices = async (): Promise<Array<Price>> => {
   const prices = {
     Binance: ex.binance.fetch_ticker("XLM/BTC"),
     huobijp: ex.huobijp.fetch_ticker("XLM/BTC"),
-    Bitbank: ex.bitbank.fetch_ticker("XLM/JPY"),
+    // Bitbank: ex.bitbank.fetch_ticker("XLM/JPY"),
   };
 
   const results = _.zip(_.keys(prices), await Promise.all(_.values(prices)));
@@ -190,7 +189,7 @@ const GetLtcPrices = async (): Promise<Array<Price>> => {
     Binance: ex.binance.fetch_ticker("LTC/BTC"),
     FTX: ex.ftx.fetch_ticker("LTC/USD"),
     huobijp: ex.huobijp.fetch_ticker("LTC/BTC"),
-    Bitbank: ex.bitbank.fetch_ticker("LTC/BTC"),
+    // Bitbank: ex.bitbank.fetch_ticker("LTC/BTC"),
     Bitbankj: ex.bitbank.fetch_ticker("LTC/JPY"),
   };
 

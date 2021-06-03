@@ -40,7 +40,7 @@ export default Vue.extend({
     digits: Number,
     jpyfeeder: {
       type: String,
-      default: "bitbank",
+      default: "zaif",
     },
   },
 
@@ -100,7 +100,7 @@ export default Vue.extend({
       repeat: true,
     },
     updateExchangeRate: {
-      interval: 3000,
+      interval: 1500,
       repeat: true,
     },
   },
