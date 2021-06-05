@@ -203,32 +203,13 @@ const GetLtcPrices = async (): Promise<Array<Price>> => {
 import cheerio from "cheerio";
 
 const GetUSDJPYRate = async () => {
-  // const result = await fx.pricing.get({
-  //   accountID: process.env.VUE_APP_OANDA_ID as string,
-  //   query: {
-  //     instruments: ["USD_JPY"],
-  //   },
-  // });
-
-  // return Number(result.prices[0].asks[0].price);
-  // console.log(result);
-
   const res = await fetch(
     process.env.VUE_APP_CORSPROXY +
       "https://info.finance.yahoo.co.jp/fx/async/getRate/"
   );
   const fx = await res.json();
-  console.log(fx);
+  // console.log(fx);
   return fx.USDJPY.Bid;
-  // const d = await res.text()
-  // const $ = cheerio.load(d);
-  // // console.log($.html());
-
-  // // const price = $(escape("#quote-header-info > div.My(6px).Pos(r).smartphone_Mt(6px) > div.D(ib).Va(m).Maw(65%).Ov(h) > div > span.Trsdu(0.3s).Fw(b).Fz(36px).Mb(-4px).D(ib)")).text();
-  // console.log($.html())
-  // const price = $('#cFx');
-  // console.log("quote", price);
-  // return 1.0;
 };
 
 const GetDogePrices = async (): Promise<Array<Price>> => {

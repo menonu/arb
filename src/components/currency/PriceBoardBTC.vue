@@ -60,8 +60,8 @@ export default Vue.extend({
 
   methods: {
     async updatePrice() {
-      console.log(name + ": price update");
       const prices = await this.pricefeeder();
+      console.log("price updated");
       this.prices = prices;
     },
     async updateExchangeRate() {

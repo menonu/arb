@@ -66,33 +66,10 @@ export default Vue.extend({
     },
     async updateExchangeRate() {
       this.jpyusd = await GetUSDJPYRate();
-      // await fetch("https://api.exchangeratesapi.io/latest?base=USD", {
-      //   mode: "cors",
-      // })
-      //   .then(response => response.json())
-      //   .then(data => (this.jpyusd = data.rates.JPY));
-
-      // const CorsProxy = process.env.VUE_APP_CORSPROXY || "";
-      // const df = await fetch(
-      //   CorsProxy + "https://www.gaitameonline.com/rateaj/getrate",
-      //   {
-      //     mode: "cors",
-      //   }
-      // )
-      //   .then(response => response.json())
-      //   .then(
-      //     data =>
-      //       (this.jpyusd = data.quotes.find(
-      //         (el: any) => el.currencyPairCode === "USDJPY"
-      //       ).open)
-      //   );
-
       const ret = await Promise.all([
         GetBTCJPYPrice(this.jpyfeeder),
         GetBTCUSDPrice(),
       ]);
-      // const btcjpy = GetBTCJPYPrice();
-      // const btcusd = GetBTCUSDPrice()
       this.btcjpy = ret[0];
       this.btcusd = ret[1];
     },
