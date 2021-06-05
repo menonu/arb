@@ -32,6 +32,8 @@ type Data = {
   jpyusd: number;
   btcjpy: number;
   btcusd: number;
+  timer1: any;
+  timer2: any;
 };
 
 export default Vue.extend({
@@ -55,14 +57,16 @@ export default Vue.extend({
       jpyusd: 1,
       btcjpy: 1,
       btcusd: 1,
+      timer1: "",
+      timer2: "",
     };
   },
 
   methods: {
     async updatePrice() {
-      console.log(name + ": price update");
-      const prices = await this.pricefeeder();
-      this.prices = prices;
+      console.log("try");
+      this.prices = await this.pricefeeder();
+      console.log("updated");
     },
     async updateExchangeRate() {
       this.jpyusd = await GetUSDJPYRate();
@@ -73,18 +77,23 @@ export default Vue.extend({
       this.btcjpy = ret[0];
       this.btcusd = ret[1];
     },
+
+    cancelAutoUpdate() {
+      clearInterval(this.timer1);
+      clearInterval(this.timer2);
+    },
   },
 
-  timers: {
-    /* key = name of method */
-    updatePrice: {
-      interval: 1000,
-      repeat: true,
-    },
-    updateExchangeRate: {
-      interval: 3000,
-      repeat: true,
-    },
+  beforeDestroy() {
+    this.cancelAutoUpdate();
+  },
+
+  created() {
+    this.updatePrice();
+    this.updateExchangeRate();
+
+    this.timer1 = setInterval(this.updatePrice, 2000);
+    this.timer2 = setInterval(this.updateExchangeRate, 3000);
   },
 
   computed: {
