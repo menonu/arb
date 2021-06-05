@@ -20,12 +20,9 @@
 import Vue from "vue";
 import PriceCard, { RefinedPrice } from "./PriceCard.vue";
 import PriceHeader from "./PriceHeader.vue";
-import {
-  Price,
-  GetBTCJPYPrice,
-  GetBTCUSDPrice,
-  GetUSDJPYRate,
-} from "./logic/currency";
+import { Arbinfo, Price } from "arblib";
+
+const arb = new Arbinfo(process.env.VUE_APP_CORSPROXY || "");
 
 type Data = {
   prices: Array<Price>;
@@ -64,20 +61,18 @@ export default Vue.extend({
 
   methods: {
     async updatePrice() {
-      console.log("try");
       this.prices = await this.pricefeeder();
-      console.log(this.prices);
       console.log("price updated");
     },
     async updateExchangeRate() {
       const ret = await Promise.all([
-        GetBTCJPYPrice(this.jpyfeeder),
-        GetBTCUSDPrice(),
+        arb.GetBTCJPYPrice(this.jpyfeeder),
+        arb.GetBTCUSDPrice(),
       ]);
       this.btcjpy = ret[0];
       this.btcusd = ret[1];
 
-      this.jpyusd = await GetUSDJPYRate();
+      this.jpyusd = await arb.GetUSDJPYRate();
     },
 
     cancelAutoUpdate() {

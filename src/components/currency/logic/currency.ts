@@ -1,6 +1,5 @@
 import ccxt, { Exchange, Ticker } from "ccxt";
 import _ from "lodash";
-import * as oandaAPI from "@narative/oanda-v20";
 
 const InitCCXT = () => {
   const proxyurl = process.env.VUE_APP_CORSPROXY || "";

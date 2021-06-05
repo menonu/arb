@@ -41,18 +41,9 @@
 import Vue from "vue";
 import USDBOARD from "./currency/PriceBoardUSD.vue";
 import BTCBOARD from "./currency/PriceBoardBTC.vue";
-// import ETHBOARD from "./currency/PriceBoardETH.vue";
-import {
-  GetBtcPrices,
-  GetXemPrices,
-  GetBchPrices,
-  GetEthPrices,
-  GetXrpPrices,
-  GetXlmPrices,
-  GetLtcPrices,
-  GetDogePrices,
-  GetXymPrices,
-} from "./currency/logic/currency";
+import { Arbinfo, Price } from "arblib";
+
+const arb = new Arbinfo(process.env.VUE_APP_CORSPROXY || "");
 
 export default Vue.extend({
   name: "DashBoard",
@@ -70,27 +61,47 @@ export default Vue.extend({
         {
           tab: "BTC",
           content: "USDBOARD",
-          pricefeeder: GetBtcPrices,
+          pricefeeder: async () => await arb.GetBtcPrices(),
           digits: 2,
         },
         {
           tab: "XEM",
           content: "BTCBOARD",
-          pricefeeder: GetXemPrices,
+          pricefeeder: async () => await arb.GetXemPrices(),
           jpyfeeder: "zaif",
         },
-        { tab: "XYM", content: "BTCBOARD", pricefeeder: GetXymPrices },
-        { tab: "BCH", content: "BTCBOARD", pricefeeder: GetBchPrices },
+        // { tab: "XYM", content: "BTCBOARD", pricefeeder: arb.GetXymPrices },
+        {
+          tab: "BCH",
+          content: "BTCBOARD",
+          pricefeeder: async () => await arb.GetBchPrices(),
+        },
         {
           tab: "ETH",
           content: "BTCBOARD",
-          pricefeeder: GetEthPrices,
+          pricefeeder: async () => await arb.GetEthPrices(),
           digits: 6,
         },
-        { tab: "XRP", content: "BTCBOARD", pricefeeder: GetXrpPrices },
-        { tab: "XLM", content: "BTCBOARD", pricefeeder: GetXlmPrices },
-        { tab: "LTC", content: "BTCBOARD", pricefeeder: GetLtcPrices },
-        { tab: "DOGE", content: "BTCBOARD", pricefeeder: GetDogePrices },
+        {
+          tab: "XRP",
+          content: "BTCBOARD",
+          pricefeeder: async () => await arb.GetXrpPrices(),
+        },
+        {
+          tab: "XLM",
+          content: "BTCBOARD",
+          pricefeeder: async () => await arb.GetXlmPrices(),
+        },
+        {
+          tab: "LTC",
+          content: "BTCBOARD",
+          pricefeeder: async () => await arb.GetLtcPrices(),
+        },
+        {
+          tab: "DOGE",
+          content: "BTCBOARD",
+          pricefeeder: async () => await arb.GetDogePrices(),
+        },
       ],
     };
   },
