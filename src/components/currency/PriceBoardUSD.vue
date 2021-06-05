@@ -20,7 +20,12 @@
 import Vue from "vue";
 import PriceCard, { RefinedPrice } from "./PriceCard.vue";
 import PriceHeader from "./PriceHeader.vue";
-import { Price, GetBTCJPYPrice, GetBTCUSDPrice, GetUSDJPYRate } from "./logic/currency";
+import {
+  Price,
+  GetBTCJPYPrice,
+  GetBTCUSDPrice,
+  GetUSDJPYRate,
+} from "./logic/currency";
 
 type Data = {
   prices: Array<Price>;
@@ -100,7 +105,7 @@ export default Vue.extend({
       repeat: true,
     },
     updateExchangeRate: {
-      interval: 1500,
+      interval: 3000,
       repeat: true,
     },
   },
