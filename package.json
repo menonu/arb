@@ -8,7 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "arblib": "git+ssh://git@github.com:menonu/arblib.git#1.1.1",
+    "arblib": "./external/arblib",
     "ccxt": "^1.50.78",
     "cheerio": "^1.0.0-rc.5",
     "lodash": "^4.17.20",
